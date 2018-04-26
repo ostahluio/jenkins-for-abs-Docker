@@ -46,18 +46,6 @@ RUN apt-get update && apt-get install -y \
 		python-pip
 
 
-# optimizer V2 dependencies (needs python 3.x)
-#RUN rm -rf /var/lib/apt/lists/* && \
-#		pip install Cython \
-#			numpy && \
-		# pip has some dependencies problems in doing everything in one step
-	    # that is why we do it in multiple steps
-#		pip install \
-#			click \
-#			requests \
-#			smac
-
-
 # download and install zephyurs2
 RUN cd / && \
     mkdir solvers_exec && \
@@ -92,8 +80,6 @@ ENV PATH /minizinc:$PATH
   # download fzn2smt
   ###############
 
-#COPY ./docker_scripts/antlr-runtime-3.2.jar /antlr-runtime-3.2.jar
-
 RUN apt-get update && \
 	# openjdk and unzip for the fzn2smt	
 	apt-get install -y \
@@ -125,6 +111,3 @@ RUN cd /solvers_exec && \
 # abs file for the smart deployer test run
 COPY FRHErlang.abs /solvers_exec/FRHErlang.abs 
 RUN chmod a=rx /solvers_exec/FRHErlang.abs
-
-# drop back to the regular jenkins user - good practice
-#USER jenkins
